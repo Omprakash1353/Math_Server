@@ -1,0 +1,25 @@
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../node_modules/.prisma/client"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+enum OperationType {
+  ADDITION
+  FIBONACCI
+  FACTORIAL
+  PRIME
+}
+
+model Operation {
+  id        Int           @id @default(autoincrement())
+  type      OperationType
+  input     Json
+  result    Float
+  createdAt DateTime      @default(now())
+}

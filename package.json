@@ -1,0 +1,40 @@
+{
+  "name": "temp-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "vitest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.10.0",
+  "dependencies": {
+    "@libsql/client": "^0.15.4",
+    "@prisma/adapter-libsql": "^6.6.0",
+    "@prisma/client": "6.6.0",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jest": "^29.7.0",
+    "morgan": "^1.10.0",
+    "supertest": "^7.1.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^22.15.3",
+    "@types/supertest": "^6.0.3",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.8",
+    "prisma": "6.6.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.2"
+  }
+}
