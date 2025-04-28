@@ -40,10 +40,10 @@ describe("Math API Integration Tests", () => {
   });
 
   it("should retrieve all operations", async () => {
-    await request(app).post("/api/addition").send({ a: 1, b: 2 });
-
+    const addRes = await request(app).post("/api/addition").send({ a: 1, b: 2 });
+    console.log(addRes.body);
     const response = await request(app).get("/api/operations").expect(200);
-
+    console.log(response.body);
     expect(response.body).toHaveProperty("operations");
     expect(Array.isArray(response.body.operations)).toBe(true);
     expect(response.body.operations.length).toBeGreaterThanOrEqual(1);
