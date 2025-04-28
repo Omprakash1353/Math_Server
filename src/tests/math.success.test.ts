@@ -4,11 +4,8 @@ import app from "../index.js";
 import { prisma } from "../utils/prisma.js";
 
 describe("Math API Integration Tests", () => {
-  beforeEach(async () => {
-    await prisma.operation.deleteMany({});
-  });
-
   afterAll(async () => {
+    await prisma.operation.deleteMany({});
     await prisma.$disconnect();
   });
 
@@ -57,9 +54,11 @@ describe("Math API Integration Tests", () => {
 
     expect(operation).toBe(null);
   });
-  
+
   it("should retrieve all operations", async () => {
-    const addRes = await request(app).post("/api/addition").send({ a: 1, b: 2 });
+    const addRes = await request(app)
+      .post("/api/addition")
+      .send({ a: 1, b: 2 });
     console.log(addRes.body);
     const response = await request(app).get("/api/operations").expect(200);
     console.log(response.body);
