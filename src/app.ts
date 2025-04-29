@@ -1,7 +1,9 @@
 import { config } from "dotenv";
 import express from "express";
+import { dirname, join } from "path";
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
+import { fileURLToPath } from "url";
 import {
   errorHandler,
   notFoundHandler,
@@ -17,13 +19,14 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 const specs = swaggerJsdoc(swaggerConfigurationOptions);
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(loggerMiddleware);
 
-app.get("/", (req, res) => {
-  res.send("Welcome to the Math API!");
-});
+app.use(express.static(join(__dirname, "..", "public")));
 
 app.use(
   "/api-docs",
