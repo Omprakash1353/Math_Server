@@ -21,6 +21,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(loggerMiddleware);
 
+app.get("/", (req, res) => {
+  res.send("Welcome to the Math API!");
+});
+
 app.use(
   "/api-docs",
   swaggerUi.serve,
