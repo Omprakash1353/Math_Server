@@ -93,6 +93,8 @@ Swagger is used to generate API documentation. Once the server is running, you c
 - Local server: `http://localhost:<PORT>/api-docs`
 - Deployed server: **[Swagger API Docs](https://math-server-jwry.onrender.com/api-docs)**
 
+![alt text](public/image.png)
+
 ## Build
 
 The build files are generated in the `dist` folder. To build the project, run:
