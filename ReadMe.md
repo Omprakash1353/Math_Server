@@ -9,6 +9,8 @@ This project is a TypeScript and Express-based server built using Node.js and `p
 You can access the live server at:  
 **[Live Server URL](https://math-server-jwry.onrender.com)**
 
+> **Note:** As the server is deployed on a free instance, it may take up to 60 seconds to respond if it has been inactive.
+
 ## Running Locally
 
 ### Prerequisites
