@@ -1,6 +1,6 @@
 import request from "supertest";
 import { afterAll, beforeEach, describe, expect, it } from "vitest";
-import app from "../index.js";
+import app from "../app.js";
 import { prisma } from "../utils/prisma.js";
 
 describe("Math API Integration Tests", () => {

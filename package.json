@@ -2,11 +2,11 @@
   "name": "temp-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/index.js",
+    "start": "node dist/app.js",
     "test": "vitest",
     "db:generate": "prisma generate"
   },
