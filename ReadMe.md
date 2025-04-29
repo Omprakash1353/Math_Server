@@ -111,6 +111,31 @@ npm run build
 
 This project uses SQLite from Turso as the database. Prisma is used as the ORM for database operations.
 
+## Tests
+
+The project includes a set of unit and integration tests located in the `src/tests` folder. These tests ensure the reliability and correctness of the server's functionality.
+
+### Running Tests
+
+To execute the tests, use the following command:
+
+```bash
+pnpm test
+```
+
+Or, if using `npm`:
+
+```bash
+npm test
+```
+
+### Test Structure
+
+- **Integration Tests**: Verify the interaction between different modules and the overall behavior of the server.
+
+Make sure to run the tests after making any changes to ensure that the application remains stable.
+
+
 ## Contributing
 
 Feel free to fork the repository and submit pull requests.
