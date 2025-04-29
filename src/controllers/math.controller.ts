@@ -1,5 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import { OperationRepository } from "../repository/math.repository.js";
+import { factorialCal, fibonacciNumber, isPrime } from "../utils/math.js";
 
 const operationRepository = new OperationRepository();
 
@@ -49,20 +50,7 @@ export async function fibonacci(
       return;
     }
 
-    const fib = (num: number): number => {
-      if (num <= 1) return num;
-      let a = 0,
-        b = 1,
-        temp;
-      for (let i = 2; i <= num; i++) {
-        temp = a + b;
-        a = b;
-        b = temp;
-      }
-      return b;
-    };
-
-    const result = fib(n);
+    const result = fibonacciNumber(n);
     console.info("[FIBONACCI]", result);
     await operationRepository.createOperation("FIBONACCI", { n }, result);
 
@@ -88,16 +76,7 @@ export async function factorial(
       return;
     }
 
-    const fact = (num: number): number => {
-      if (num === 0 || num === 1) return 1;
-      let result = 1;
-      for (let i = 2; i <= num; i++) {
-        result *= i;
-      }
-      return result;
-    };
-
-    const result = fact(n);
+    const result = factorialCal(n);
     console.info("[FACTORIAL]", result);
     await operationRepository.createOperation("FACTORIAL", { n }, result);
 
@@ -122,20 +101,6 @@ export async function primeNumber(
         .json({ error: "Invalid input: number must be an integer" });
       return;
     }
-
-    const isPrime = (num: number): boolean => {
-      // Handle special cases
-      if (num <= 1) return false;
-      if (num <= 3) return true;
-      if (num % 2 === 0 || num % 3 === 0) return false;
-
-      // Check using 6k +/- 1 optimization
-      for (let i = 5; i * i <= num; i += 6) {
-        if (num % i === 0 || num % (i + 2) === 0) return false;
-      }
-
-      return true;
-    };
 
     const result = isPrime(n);
     console.info("[PRIME]", n, result);
