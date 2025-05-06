@@ -14,6 +14,7 @@ enum OperationType {
   FIBONACCI
   FACTORIAL
   PRIME
+  SUBTRACTION
 }
 
 model Operation {

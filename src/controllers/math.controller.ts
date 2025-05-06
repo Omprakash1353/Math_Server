@@ -35,6 +35,32 @@ export async function addition(
   }
 }
 
+export async function subtraction(
+  req: Request<{}, {}, AdditionRequestBody>,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
+  try {
+    const { a, b } = req.body;
+
+    if (typeof a !== "number" || typeof b !== "number") {
+      res
+        .status(400)
+        .json({ error: "Invalid input: 'a' and 'b' must be numbers" });
+      return;
+    }
+
+    const result = a - b;
+    console.info("[SUBTRACTION]", result);
+    await operationRepository.createOperation("SUBTRACTION", [a, b], result);
+
+    res.status(200).json({ result });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+}
+
 export async function fibonacci(
   req: Request<{ count: string }>,
   res: Response,

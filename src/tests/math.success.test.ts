@@ -21,6 +21,15 @@ describe("Math API Integration Tests", () => {
     expect(response.body).toHaveProperty("result", 30);
   });
 
+  it("should subtract two numbers and store in database", async () => {
+    const response = await request(app)
+      .post("/api/subtraction")
+      .send({ a: 10, b: 20 })
+      .expect(200);
+
+    expect(response.body).toHaveProperty("result", -10);
+  });
+
   it("should calculate fibonacci and store in database", async () => {
     const response = await request(app).get("/api/fibonacci/7").expect(200);
 

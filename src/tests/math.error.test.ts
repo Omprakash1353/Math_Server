@@ -36,6 +36,30 @@ describe("Math API Error Handling Tests", () => {
     );
   });
 
+  it("should return error for invalid subtraction input", async () => {
+    const response = await request(app)
+      .post("/api/subtraction")
+      .send({ a: "not-a-number", b: 20 })
+      .expect(400);
+
+    expect(response.body).toHaveProperty(
+      "error",
+      "Invalid input: 'a' and 'b' must be numbers"
+    );
+  });
+
+  it("should return error for missing subtraction input", async () => {
+    const response = await request(app)
+      .post("/api/subtraction")
+      .send({ a: 10 })
+      .expect(400);
+
+    expect(response.body).toHaveProperty(
+      "error",
+      "Invalid input: 'a' and 'b' must be numbers"
+    );
+  });
+
   it("should return error for invalid fibonacci input", async () => {
     const response = await request(app)
       .get("/api/fibonacci/not-a-number")

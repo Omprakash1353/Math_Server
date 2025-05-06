@@ -1,6 +1,7 @@
 import express from "express";
 import {
   addition,
+  subtraction,
   factorial,
   fibonacci,
   primeNumber,
@@ -36,6 +37,21 @@ const router = express.Router();
  *         result:
  *           type: number
  *           example: 12
+ *     SubtractNumbersInput:
+ *       type: object
+ *       properties:
+ *         a:
+ *           type: number
+ *           example: 10
+ *         b:
+ *           type: number
+ *           example: 7
+ *     SubtractNumbersOutput:
+ *       type: object
+ *       properties:
+ *         result:
+ *           type: number
+ *           example: 3
  *     FibonacciOutput:
  *       type: object
  *       properties:
@@ -65,7 +81,7 @@ const router = express.Router();
  *           example: 1
  *         type:
  *           type: string
- *           enum: [ADDITION, FIBONACCI, FACTORIAL, PRIME]
+ *           enum: [ADDITION, SUBTRACTION, FIBONACCI, FACTORIAL, PRIME_CHECK]
  *           example: "ADDITION"
  *         input:
  *           type: string
@@ -93,7 +109,7 @@ const router = express.Router();
  *           example: 1
  *         type:
  *           type: string
- *           enum: [ADDITION, FIBONACCI, FACTORIAL, PRIME_CHECK]
+ *           enum: [ADDITION, SUBTRACTION, FIBONACCI, FACTORIAL, PRIME_CHECK]
  *           example: "ADDITION"
  *         input:
  *           type: string
@@ -128,6 +144,28 @@ const router = express.Router();
  *         description: Internal server error
  */
 router.post("/addition", addition);
+
+/**
+ * @swagger
+ * /api/subtraction:
+ *   post:
+ *     summary: Subtracts two numbers
+ *     tags: [Math]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/SubtractNumbersInput'
+ *     responses:
+ *       200:
+ *         description: Difference of a and b
+ *       400:
+ *         description: Invalid input
+ *       500:
+ *         description: Internal server error
+ */
+router.post("/subtraction", subtraction);
 
 /**
  * @swagger
