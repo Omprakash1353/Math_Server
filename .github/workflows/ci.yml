@@ -73,3 +73,28 @@ jobs:
 
       - name: Run tests
         run: pnpm test
+
+  deploy:
+    runs-on: ubuntu
+    needs: test
+    if: success()
+    steps: 
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH key for EC2
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+
+      - name: Deploy to EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
+            cd /home/ubuntu/Math_Server || exit
+            git reset --hard || exit
+            git pull origin main || exit
+            pnpm install || exit
+            pnpm dlx prisma generate || exit
+            pnpm run build || exit
+            pm2 restart all || exit  # Restart app if you're using PM2 for process management
+          EOF
