@@ -93,6 +93,7 @@ jobs:
             cd /home/ubuntu/Math_Server || exit
             git reset --hard || exit
             git pull origin main || exit
+            npm install -g pnpm || exit
             pnpm install || exit
             pnpm dlx prisma generate || exit
             pnpm run build || exit
