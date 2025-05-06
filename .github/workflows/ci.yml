@@ -44,7 +44,7 @@ jobs:
     env:
       PORT: 3000
       TURSO_DATABASE_URL: ${{ secrets.TURSO_DATABASE_URL }}
-      TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN }} 
+      TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -78,7 +78,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     if: success()
-    steps: 
+    steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -117,12 +117,17 @@ jobs:
             pnpm dlx prisma generate || exit
             pnpm run build || exit
             
-            # Restart using PM2
+            # Improved PM2 management
             if command -v pm2 &> /dev/null; then
-              pm2 restart all || exit
+              # Check if app is already registered with PM2
+              if pm2 list | grep -q "math-server"; then
+                pm2 delete math-server || echo "No existing process to delete"
+              fi
+              # Start fresh with consistent configuration
+              pm2 start npm --name "math-server" --watch -- run start
             else
               echo "PM2 not found. Installing..."
               sudo npm install -g pm2
-              pm2 start npm --name "math-server" -- run start
+              pm2 start npm --name "math-server" --watch -- run start
             fi
           EOF
