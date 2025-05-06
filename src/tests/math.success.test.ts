@@ -30,6 +30,15 @@ describe("Math API Integration Tests", () => {
     expect(response.body).toHaveProperty("result", -10);
   });
 
+  it("should multiply two numbers and store in database", async () => {
+    const response = await request(app)
+      .post("/api/multiplication")
+      .send({ a: 10, b: 20 })
+      .expect(200);
+
+    expect(response.body).toHaveProperty("result", 200);
+  });
+
   it("should calculate fibonacci and store in database", async () => {
     const response = await request(app).get("/api/fibonacci/7").expect(200);
 
@@ -60,21 +69,35 @@ describe("Math API Integration Tests", () => {
   });
 
   it("should delete an operation", async () => {
-    await request(app).post("/api/addition").send({ a: 5, b: 5 });
-
-    const allOps = await request(app).get("/api/operations").expect(200);
-    const idToDelete = allOps.body.operations[0].id;
+    const createResponse = await request(app)
+      .post("/api/addition")
+      .send({ a: 5, b: 5 })
+      .expect(200);
+    
+    const operations = await prisma.operation.findMany({
+      orderBy: { id: 'desc' },
+      take: 1
+    });
+    
+    expect(operations.length).toBeGreaterThan(0);
+    const operationToDelete = operations[0];
+    const operationId = operationToDelete.id;
+    
+    const operationBeforeDelete = await prisma.operation.findUnique({
+      where: { id: operationId },
+    });
+    expect(operationBeforeDelete).not.toBeNull();
 
     const deleteResponse = await request(app)
-      .delete(`/api/operations/${idToDelete}`)
+      .delete(`/api/operations/${operationId}`)
       .expect(200);
 
-    expect(deleteResponse.body).toHaveProperty("id", idToDelete);
+    expect(deleteResponse.body).toHaveProperty("id", operationId);
 
-    const operation = await prisma.operation.findUnique({
-      where: { id: idToDelete },
+    const deletedOperation = await prisma.operation.findUnique({
+      where: { id: operationId },
     });
 
-    expect(operation).toBe(null);
+    expect(deletedOperation).toBeNull();
   });
 });

@@ -2,6 +2,7 @@ import express from "express";
 import {
   addition,
   subtraction,
+  multiplication,
   factorial,
   fibonacci,
   primeNumber,
@@ -52,6 +53,21 @@ const router = express.Router();
  *         result:
  *           type: number
  *           example: 3
+ *     MultiplyNumbersInput:
+ *       type: object
+ *       properties:
+ *         a:
+ *           type: number
+ *           example: 5
+ *         b:
+ *           type: number
+ *           example: 7
+ *     MultiplyNumbersOutput:
+ *       type: object
+ *       properties:
+ *         result:
+ *           type: number
+ *           example: 35
  *     FibonacciOutput:
  *       type: object
  *       properties:
@@ -166,6 +182,28 @@ router.post("/addition", addition);
  *         description: Internal server error
  */
 router.post("/subtraction", subtraction);
+
+/**
+ * @swagger
+ * /api/multiplication:
+ *   post:
+ *     summary: Multiplies two numbers
+ *     tags: [Math]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/MultiplyNumbersInput'
+ *     responses:
+ *       200:
+ *         description: Product of a and b
+ *       400:
+ *         description: Invalid input
+ *       500:
+ *         description: Internal server error
+ */
+router.post("/multiplication", multiplication);
 
 /**
  * @swagger

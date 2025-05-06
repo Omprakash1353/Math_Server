@@ -11,10 +11,11 @@ datasource db {
 
 enum OperationType {
   ADDITION
+  SUBTRACTION
+  MULTIPLICATION
   FIBONACCI
   FACTORIAL
   PRIME
-  SUBTRACTION
 }
 
 model Operation {
