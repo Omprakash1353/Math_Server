@@ -109,8 +109,8 @@ jobs:
               sudo apt-get install -y npm
             fi
             
-            # Install pnpm
-            npm install -g pnpm || exit
+            # Install pnpm with sudo to avoid permission issues
+            sudo npm install -g pnpm || exit
             
             # Continue with deployment
             pnpm install || exit
@@ -122,7 +122,7 @@ jobs:
               pm2 restart all || exit
             else
               echo "PM2 not found. Installing..."
-              npm install -g pm2
+              sudo npm install -g pm2
               pm2 start npm --name "math-server" -- run start
             fi
           EOF
