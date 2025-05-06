@@ -93,9 +93,36 @@ jobs:
             cd /home/ubuntu/Math_Server || exit
             git reset --hard || exit
             git pull origin main || exit
+            
+            # Ensure Node.js is installed
+            if ! command -v node &> /dev/null; then
+              echo "Installing Node.js..."
+              curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+              sudo apt-get install -y nodejs
+            fi
+            
+            # Ensure npm is available
+            if ! command -v npm &> /dev/null; then
+              echo "npm not found. Checking Node.js installation..."
+              node -v
+              echo "Attempting to install npm separately..."
+              sudo apt-get install -y npm
+            fi
+            
+            # Install pnpm
             npm install -g pnpm || exit
+            
+            # Continue with deployment
             pnpm install || exit
             pnpm dlx prisma generate || exit
             pnpm run build || exit
-            pm2 restart all || exit  # Restart app if you're using PM2 for process management
+            
+            # Restart using PM2
+            if command -v pm2 &> /dev/null; then
+              pm2 restart all || exit
+            else
+              echo "PM2 not found. Installing..."
+              npm install -g pm2
+              pm2 start npm --name "math-server" -- run start
+            fi
           EOF
